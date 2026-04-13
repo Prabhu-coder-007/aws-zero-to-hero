@@ -1,6 +1,35 @@
+
+Day -1
+
 EC2 = Virtual Machines
 
 Public vs Private Cloud :
 Private Cloud = Only Organization manage infra
 Public = Its cloud provider AWS, Microsoft , GCP manage the infra
 
+Why Public Cloud is so popular?
+1. No need to worry about infra work - upgrade , security , scalability etc .
+2. Cost .
+
+How AWS(Amazon Web Service) is better than others ?
+1. First mover advantage
+2.
+Note : Popular order = AWS , Azure(Microsoft) then GCP(Google)
+
+Are people going back from cloud ?
+1. Very less , may be 1-2% percentage
+2. Cloud Refactorization is going back to On-Premius
+
+Lets Start Creating the account with AWS.
+gmail user prabhuaws336@gmail.com
+pwd 601
+
+aws root user EMAIL  prabhuaws336@gmail.com
+Account name : prabhuaws
+Account ID : 082008999972
+
+Days remaining
+184 days as of 13th March 2026
+
+
+Day -2
