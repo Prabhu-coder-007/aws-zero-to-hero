@@ -1,0 +1,6 @@
+EC2 = Virtual Machines
+
+Public vs Private Cloud :
+Private Cloud = Only Organization manage infra
+Public = Its cloud provider AWS, Microsoft , GCP manage the infra
+
