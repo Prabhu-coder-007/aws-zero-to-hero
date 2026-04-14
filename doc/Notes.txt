@@ -1,0 +1,68 @@
+
+Day -1
+
+EC2 = Virtual Machines
+
+Public vs Private Cloud :
+Private Cloud = Only Organization manage infra
+Public = Its cloud provider AWS, Microsoft , GCP manage the infra
+
+Why Public Cloud is so popular?
+1. No need to worry about infra work - upgrade , security , scalability etc .
+2. Cost .
+
+How AWS(Amazon Web Service) is better than others ?
+1. First mover advantage
+2.
+Note : Popular order = AWS , Azure(Microsoft) then GCP(Google)
+
+Are people going back from cloud ?
+1. Very less , may be 1-2% percentage
+2. Cloud Refactorization is going back to On-Premius
+
+Lets Start Creating the account with AWS.
+gmail user prabhuaws336@gmail.com
+pwd 601
+
+aws root user EMAIL  prabhuaws336@gmail.com
+Account name : prabhuaws
+Account ID : 082008999972
+
+Days remaining
+184 days as of 13th March 2026
+
+
+Day -2
+
+Authetication vs Authorization
+
+Authentication - whether you have access to enter the bank
+Authorization - whether you can withdraw cash , deposit cash , check balance etc
+
+In AWS Root user can do anything in AWS.
+
+IAM - Identity and access Managment
+    - It will do Autentication and Authorization
+    - Root access not shared with any one
+    - Devops/AWS Infra Enginner will give mostly read access to developer
+    -
+
+User :
+   - Creating a new user for new person in the team
+   - Allow them to enter to AWS
+
+
+Policy :
+   - What above user can do it ? that is called Policy.  What he can do it in AWS.
+
+Groups :
+   - Everytime when new user comes we need to create a user. if that user leave then we need to remove the user.
+   - But we can create a Group , groups are like QA, Dev, DB and others
+   - Just add new user to group . so that he will get all the access attached to policy in that group
+
+Rules:
+   -
+
+
+
+
