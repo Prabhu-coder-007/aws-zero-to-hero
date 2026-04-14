@@ -1271,6 +1271,44 @@ In Route 53 we can do Domain Registration
 
 ---------
 
+Day - 7
+
+AWS Project
+
+VPC with public -private subnet in Production
+
+This example demonstrates how to create a VPC that you can use for servers in a production environment.
+To improve resiliency, you deploy the servers in two availabilty zones , by using an auto scalling group and an Application Load Balancer.
+For additional security, you deploy the servers in private subnets. The servers receive requests through the load balancer.
+The server can connect o the internet by using a NAT gateway. To improve resiliency, you deploy the NAT gateway in both Availability Zones.
+
+
+Overview :
+ The VPC has public subnets and private subnets in two Availability Zones.
+ Each public subnet contains a NAT gateway and a load balancer.
+ The server run in the private subnets, are lanuched and terminated by using an auto scalling group, and receive traffic from the load balancer
+ ther servers can connect o the internet by using the NAT gateway .
+
+
+Before we start
+- Auto Scalling
+- Load Balancer
+- Target Group
+- Bastion Host or Jump Server
+
+Auto Scalling :
+ - If my EC2 instance receive more request then auto scall my EC2 instance to server the traffic
+
+Load Balancer :
+ - Route the traffic to the applciation server
+
+Bastion Host or Jump Server:
+ - Private subnet our applications are running
+ - We will creat Bastion Host and access the private subnet of the application server
+
+
+
+
 
 
 
