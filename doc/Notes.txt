@@ -1239,6 +1239,37 @@ Security Group will be second layer
 -------------
 
 
+Day - 6
+
+Route 53
+
+Route 53 provide DNS as Service
+DNS - Domain Name System
+
+EC2 - Compute as Service
+
+What is DNS ?
+
+Every day we use DNS
+for example amazon.com or flipkart.com
+
+we never use ip address for site
+we use something called Domain name , like amazon.com
+
+this domain name has to convert to application . DNS
+
+from load balancer the call will go to application
+when we create a loadbalancer
+load balancer associate with IP address
+
+Route 53 comes before LoadBalancer
+
+In Route 53 we can do Domain Registration
+ - Hosted Zones
+ - Create DNS Record
+ - Health check
+
+---------
 
 
 
