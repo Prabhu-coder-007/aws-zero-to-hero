@@ -1137,7 +1137,7 @@ root@ip-172-31-46-136:~#
 Day 4 : VPC
 
 Virutal Private Cloud
- - Most complex topic in AWS
+ - Most IMPORTANT  topic in AWS
  - Big Region - Hyderbad . In this region we have data center
  - In this region company1, company2, company3 etc
  - AWS told we can host your application in our data center .
@@ -1178,6 +1178,65 @@ If you want to debugh the trafic
 VPC Flow Logs record every actions
 
 
+------------------------
+
+Day - 5 :
+
+ Security Group  + NACL
+
+Security Group :  Applied at EC2 instance level
+- Private Subnet doesnt have aaccess to Internet
+- You can add additional security at subnet level then we can use NACL
+- Or you can add more secuirty at EC2 instance level
+- Security can be added in mutiple layer in AWS
+- In AWS security is always shared responsbility , that means aws tell we can add vpc , subnet, nacl ,api gateway etc
+  Also we need DEVops /AWS admin also has to do security for your app
+
+Diff b/w Security group vs NACL
+- When u create a AWS account it will give default VPC
+- In AWS , By default we wont allow anything
+- Secruity Group has 2 things
+- Inbound Traffice and Outbound Traffic
+- Inbound - flowing into your applciation
+- Outbound - flowing outside of your application
+
+- By Defualt i will allow i all the outbound traffic , expert port 25
+- By Default i will denny all inbound
+
+port 25 ?
+ - AWS doesnt allow because it mailling service
+
+
+NACL : Applied at Subnet Level
+ - Network Access Control List
+ - Define what kind of traffic u want to denny
+ - NACL Organization Level Security
+ - Additional Layer of security
+ - Apply NACL to subnet. so that inside subnet if you have 10 plus EC2 instance
+ - Security group for Allow
+ - NACL for DENNY
+
+
+prabhu@Prabhus-MacBook-Air Downloads % ssh -i aws-login.pem ec2-user@51.20.141.127
+
+sudo dnf upgrade -y
+
+python3
+
+ssh -i aws-login.pem ec2-user@51.20.141.127
+
+
+
+
+[ec2-user@ip-10-0-0-97 ~]$ python3 -m http.server 8000
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ..
+
+
+
+NACL - First Layer of Filter
+Security Group will be second layer
+
+-------------
 
 
 
@@ -1185,18 +1244,4 @@ VPC Flow Logs record every actions
 
 
 
-
-Cont
-
-
-
-What :
-
-
-
-Why:
-
-
-
-How:
 
