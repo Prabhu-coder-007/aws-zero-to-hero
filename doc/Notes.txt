@@ -1133,3 +1133,70 @@ root@ip-172-31-46-136:~#
 
 
 ----------------
+
+Day 4 : VPC
+
+Virutal Private Cloud
+ - Most complex topic in AWS
+ - Big Region - Hyderbad . In this region we have data center
+ - In this region company1, company2, company3 etc
+ - AWS told we can host your application in our data center .
+ - till 2013-14 it was the scenario
+and then
+ - concepts called VPC
+ - Who will build the VPC , its devops enginner
+ - how to define the size of the vpc ? we use IP address range .
+ - what is the IP address range ? 172.16.0.0/16
+ - then devops engineer split the ip address for  each application . this concept called subnet .
+ - then devops create gateway . without this gateway no one will enter into the vpc .
+ - subnet has 2 types
+ - public subnet connect via internal gateway
+ - then load balacer comes into the place
+ - route table define path
+ - security group can say which port u want to
+
+ Internet -- Inernet Gateway -- Public Subnet -- Load Balancer - target -- Route Table (define path) -- Security Group -- Reach to APPLCIATION
+
+ Internet
+ User Type : 172.16.3.1
+
+ 1. Internet GateWay
+ 2. Public Subnet
+ 3. Load Balancer ( Elastic Load Balancer) attached with target
+ 4. Route Table define the path
+ 5. Security Group (Access/Denny) REQUEST
+
+ Addional Componest in VPC
+
+ - NACL : same security group for multiple subnet
+NAT Gateway :
+    - What if application wants to connect to internt
+    - Masking of application ip is called NAT Gateway
+    - NAT helping to download the resource from internet
+
+If you want to debugh the trafic
+VPC Flow Logs record every actions
+
+
+
+
+
+
+
+
+
+
+Cont
+
+
+
+What :
+
+
+
+Why:
+
+
+
+How:
+
