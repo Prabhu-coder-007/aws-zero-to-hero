@@ -1334,4 +1334,107 @@ ssh -i aws-login.pem ubuntu@10.0.131.243
 
 -------------------------
 
+Day - 8
 
+Scenario based interview questions and answers
+
+Question 1. You have been assgined to desgin a VPC architecture for a 2-tier application .
+The application needs to be highly available and scalable .
+How would you desgin the VPC architecture
+
+Ans :
+Highly available - multiple available zons . us-east-1 , us-east-2
+Scalability - use auto scalling group
+2 tier applciation - handle front and back end
+3 tier application - handle front , db and back end
+
+I would design a VPC architecture in the following way.
+ - I would create 2 subnets : public and private.
+ The public subnet would contain the load balancer and be accessible fro mthe internet.
+ the private subnet would host the applciation server
+
+ i would distribute the subnets across multiple availability zones for high availability
+ i wold configure auto scalling group for the application servers
+
+ Question 2 :
+ Your organization has a VPC with multiple subnets. You want to restrict outbound internet access for resources in one subnet,
+ but allow outbound internet access for resources in another subnet. how would you achive this ?
+
+ Ans : To restrict outbound intenet access for resources in one subnet, we can modify the route table
+ associated with that subnet. in the route table , we can remove the default route (0.0.0.0/0) that points to an internet gateway.
+
+ This would prevent resources in that subnet from accessing the inetnet. for the subnet where outbound internet access is
+ required ,we can keeo the default route pointing to the internet gateway .
+
+ Question 3:
+ You have a VPC with a public subnet and a private subnet. Instance in the private subnet need to accesss the internet for software updates.
+ How would you allow intenet access for instance in the private subnets ?
+
+ Ans : To allwo internet access for instance in the private subnet, we can use NAT Gateway or a NAT instance .
+
+ We would place the NAT Gateway/Instance in the public subnet and configure the private subnet route table to send outbound
+ taffic to the NAT Gateway/Instance . This way, instance in the private subnet can access the internet through the NAT gATEWAY/iNSTANCE
+
+  Question 4:
+  You have launched EC2 instance in your VPC, and you want them to communicate with each other using private IP address.
+  What steps would you table to enable this communication ?
+
+  Ans : By default, instance within same VPC can communicate with each otehr using private IP address.
+
+  To ensure this communication, we need to make sure that the instances are lanuched in the same VPC and are places in the
+  same subnet or subnets that are connected through a peering connection or a VPC peering link.
+
+  Additionaly, we should check the security groups associated with the instance to ensure that the necessary inbound and outbound rules
+  are configured to allow communciation between them.
+
+Question 5:
+
+You want to implement strict network access control for your VPC resources .
+How would you achive this ?
+
+Ans :
+To implement granular network access control for VPC resources, we can use Network Access Control Lists(ACLS)
+
+NACL are stateless and oeprate at the subnet level . We can define inbound and outbound rules in the NACLs to allow or deny
+traffice based on source and destination IP address, ports and protoclos.
+
+
+Question 6:
+
+Your organization require an isolated envorinment with the VPC for running sensitive workloads.
+How would you set up this isolated envorinment ?
+
+To set up an isolated envorinment within the VPC, we can create a subnet with no internet gateway attached.
+
+This subnet , knows as an isolated subnet will not have dorect inetnet connectivity.
+
+Question 7:
+
+Your application needs to access AWS services, such as S3 securley with in your VPC.
+How would you achive this ?
+
+Ans :
+
+- Use VPC endpoints
+
+Question 8 :
+
+What is the d/w b/w NACL and Subnet ?
+Explain with a use case .
+
+Subnet - Instance level access , stateful
+NACL - Subnet level access , staeless
+
+
+Question 9 : What is IAM User , Role , Group and Polciy
+
+IAM User - Authentication and authroization
+
+IAM Role -
+
+IAM Group -
+
+IAM Polciy  -
+
+
+---------------------
