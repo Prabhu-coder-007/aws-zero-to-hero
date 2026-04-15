@@ -1438,3 +1438,67 @@ IAM Polciy  -
 
 
 ---------------------
+
+
+Day 9 - AWS S3
+
+What is S3?
+
+-- Simple Storage Service
+--- Most simple service in AWS is S3
+--- What it will do ? It will do storgage .
+--- 11 9's (99.99999999999)
+-- Scalable
+-- high Available
+-- Secure
+-- Cost Effective
+
+
+What can you store in S3?
+ - S3 service allow you to create buckets in which you can store anything .
+ - Image , logs , video , csv , json etc
+ -
+
+ How toaccess S3?
+
+- Using https and bucket name
+
+Global Service ?
+ - Objects in S3 are globally accessible .
+ - You can give permission / restrict
+ - It will have multiple copy in AWS
+ -
+
+Benefits or Advantags:
+1. HiGH Availability
+2. SCALABILITY
+3. Security
+4. Cost Effective
+5. Performane
+
+2. SCALABILITY
+ - Should not more than 5 TB
+
+3. Security
+ - Encryption
+ - ACLS
+ - Bucket Polciy
+ - Loggign user activities
+
+4. Cost Effective
+ - It depends on the storage class
+ -
+
+
+- Version Solution
+
+
+
+
+----------------
+
+
+
+
+
+
