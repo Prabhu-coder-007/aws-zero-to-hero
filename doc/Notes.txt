@@ -1578,6 +1578,67 @@ aws ec2 run-instances \
 
 ---------------------------------
 
+Day -11  AWS CFT
+
+CFT - Cloud Formation Template
+    - Create Infrastucure for aws
+    - IaC
+    - Supports only AWS
+    - .yaml or .json
+
+ Declarative - what you see is  what you have . ie what ever u see in the template the same thing will be available in infra .
+ Versioned - Example git , it will maintanin the version of the files
+
+Features of CFT :
+ - Support both json and yaml
+ - yaml you can add commenting
+ - json wont support commenting . so please use yaml .
+ - yaml is more readable format
+ - yaml is less complex
+
+ - Drift Detection in CFT . basically check the diff b/w Code and actual infra
+ - Detect Drift feature in CFT will do this
+
+ - AWS CFT we have something called Stacks
+ - Create - Import
+
+TO create a yaml file or json file
+ - Version
+ - Description
+ - metaData
+ - parameters
+ - Rules
+ - Mapping
+ - Conditions
+ - RESOURCE (ONLY MANDATORY FIELD )
+ - output
+
+https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
+
+Cloud Formation - Stacks - create
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: A sample CloudFormation template with YAML comments.
+# Resources section
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      # Linux AMI
+      ImageId: ami-1234567890abcdef0
+      InstanceType: t2.micro
+      KeyName: MyKey
+      BlockDeviceMappings:
+        - DeviceName: /dev/sdm
+          Ebs:
+            VolumeType: io1
+            Iops: 200
+            DeleteOnTermination: false
+            VolumeSize: 20
+
+
+
+
 
 
 
