@@ -1497,6 +1497,87 @@ Benefits or Advantags:
 
 ----------------
 
+Day 10 - AWS CLI
+
+AWS UI is not automation friendly
+
+Devops main functionality is infrasturce automation/managment.
+
+AWS CAME with API
+A- Application
+P - Programming
+I - Interface
+
+Using this API we can automate AWS infrasturcre .
+Such tools are
+ - AWS CLI
+ - Terraform
+ - Cloud Formation
+ - CDK
+
+CLI - Comamnd Line Interface
+    - Its Python Utility
+
+1. Install CLI
+2. Go through AWS CLI Refrence Doc
+3. Using above doc we can create a AWS RESOURCE
+
+User  -----> cli -------> API
+
+User send request as create S3 bucket
+cli convert to API call
+
+
+CLI is very quick use case
+Terraform/CFT - First write , execute and then get result
+
+Install CLI
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+
+Last login: Wed Apr 15 09:59:57 on ttys001
+prabhu@Prabhus-MacBook-Air ~ % curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 52.7M  100 52.7M    0     0  12.2M      0  0:00:04  0:00:04 --:--:-- 12.2M
+Password:
+installer: Package name is AWS Command Line Interface
+installer: Installing at base path /
+installer: The install was successful.
+prabhu@Prabhus-MacBook-Air ~ % aws
+
+aws: [ERROR]: An error occurred (ParamValidation): the following arguments are required: command
+
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+
+prabhu@Prabhus-MacBook-Air ~ % aws --version
+aws-cli/2.34.30 Python/3.14.4 Darwin/25.4.0 exe/arm64
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+
+
+Create EC2 instance
+aws ec2 run-instances \
+    --image-id ami-xxxxxx \
+    --count 1 \
+    --instance-type t3.micro \
+    --key-name aws-login \
+    --security-group-ids sg-xxxxxx \
+    --subnet-id subnet-xxxxxx \
+    --region eu-north-1
+
+
+---------------------------------
+
 
 
 
