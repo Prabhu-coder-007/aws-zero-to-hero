@@ -1689,5 +1689,41 @@ git push
 
 ----------
 
+Day 13-
+
+AWS Code Pipeline  - Jenkin vs CopePipeline
+
+How CI/CD work with Jenkis ?
+ - Source code repo ( git , bitbucket )
+ - configure the webhook will trigger the jenkins
+ - jenkis implementation continus integration
+   stages (general) :
+     - checkout
+     - buil & uat
+     - code scan - sonnarqube etc
+     - image build
+     - image scan
+     - image push
+ - jenkis invoking continous delivery
+   Stages:
+     - u can use gitops , argoCd, hel charts, ansible etc
+ - target platform in kubernets
 
 
+now lets see awsPipeline
+
+User -- Push changes to -- CodeCommit -- trigger/invoking the AWS CodePipeline -- invoking AWS codebuild (continous integration)--
+---codeDeploy(Continoud Deployment) -- deploy to aws/kubernets etc
+
+Why organization prefer if its a paid service and jenkis is free
+ - AWS Manage everything
+
+Why Jenkis is prfeered ?
+ - Jenkin is free
+ - Easy to manage
+ - Jenkin can be installed in EC2 instance with auto - scalling
+ - too much depend on aws , if tmr u want to go to azure , or gcp its difficult
+ -
+
+
+ -----------------
