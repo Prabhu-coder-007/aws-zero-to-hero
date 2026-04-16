@@ -1770,7 +1770,50 @@ SNS - Simple Notification Service
 
 DAY -17
 
-AWS Lambda
+AWS Lambda :
+ Usages :
+ - cost optimization
+ - S3
+ - Cloud watch
+ - event driven
+
+What is Lambda :
+ - What its solving the problem ?
+ 1. Compute
+ 2. Serverless
+
+ECS also solving the problem of compute
+Serverless means :
+ - Automatically create a compute based on your applications
+ - Once the application functionality is done , it will automatically scale down
+ - example
+   food delivery platform ,
+   when user create order and payment order is done . then lambda will automatically scale down
+
+ Diff b/w Lambda :
+  - EC2 you will get ip address
+  - Lambda you wont see any other information
+  - EC2 you have the complete control over the server
+
+Who will decide which one to choose ? EC2 or Lambda ?
+  - App Architect team will decide
+
+Using lambda function you can chek all the aws service and report un-used resource to delete.
+Its called cost optimization .
+
+
+for example if you want to run the python 10 script at 10 am
+then go for lamda function .
+It has be driven by Event .
+
+Lambda will be used  for
+ - cost optimization
+ - Security / compliance
+ - run the cron job at specific time etc
+
+-----------
+
+
 
 
 
