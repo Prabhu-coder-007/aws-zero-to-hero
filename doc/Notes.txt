@@ -1747,3 +1747,30 @@ AWS End to End CD
 DAY -16 :
 
 AWS Cloud Watch
+
+Funcdamentals :
+  Demo 1 - using default metrics , cpu utilization of EC2 instance , if its exceeds 80%
+  Demo 2-  Custome metrics ,
+  cloud is service which is watching the activity of the service , like a watchman
+  it watch most of the activity which you perform in the cloud
+  it will help in monitoring , alerting ,reporting and logging .
+
+Features :
+  - Monitoring , mostly infra monitroing
+  - Reallife Metrics - like cpu usage , memeory consumptions, api call for the applications  etc
+  - Alarams
+  - log insigts , it help you in which aws service accessing other aws services
+  - Custome metrics - example cloud watch default dont monitor memeory use . so use custome metrics
+  - Cost Optimization
+  - Scalling
+
+
+SNS - Simple Notification Service
+---------
+
+DAY -17
+
+AWS Lambda
+
+
+
