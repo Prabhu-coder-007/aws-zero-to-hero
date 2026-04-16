@@ -1732,12 +1732,18 @@ Day -14 :
 
 AWS End to End CI
 
-
+-----------
 
 DAY -15
 
 AWS End to End CD
 
 - Code deplouy
+  should take the application and deploy to EC2 Instance
 
 
+-----------
+
+DAY -16 :
+
+AWS Cloud Watch
