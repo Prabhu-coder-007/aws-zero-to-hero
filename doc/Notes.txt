@@ -1727,3 +1727,17 @@ Why Jenkis is prfeered ?
 
 
  -----------------
+
+Day -14 :
+
+AWS End to End CI
+
+
+
+DAY -15
+
+AWS End to End CD
+
+- Code deplouy
+
+
