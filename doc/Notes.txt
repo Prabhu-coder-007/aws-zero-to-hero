@@ -1813,6 +1813,39 @@ Lambda will be used  for
 
 -----------
 
+Day -18
+
+AWS - Cost Optimization /Cloud Optimization
+
+Usage :
+ - S3 bucket is created and stoped using it
+ - Some one created EKS cluster forget to delete it
+ - etc etc ..
+ - If you forget AWS will still charge money for it
+ - So Devops or Cloud enginner has to find and remove those un-used resources in AWS
+ - Make sure cloud cost goes down
+ - If any stale resource first send email notification to developer
+ - Or if devops user has the access then delete it
+
+Use lambad function
+ - write python code in the module
+ - this code will talk to AWS API
+ - write lambda function for s3 , EBS snapshot
+ - trigger the lambda function using cloud watch
+
+Demo
+ - ECS instance has a volume as EBS , developer created the snapshot
+ - Delete the EC2 instance but volumne or snapshot is not deleted
+
+
+Lambda function --> Python ---> AWS API
+
+Steps :
+1. Fetch all EBS Snapshot
+2. Filter out snapshot that has stale
+3. remoe the stale resource
+
+----------
 
 
 
