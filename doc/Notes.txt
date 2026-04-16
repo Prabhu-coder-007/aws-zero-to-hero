@@ -1636,11 +1636,58 @@ Resources:
             DeleteOnTermination: false
             VolumeSize: 20
 
+--------------------------------------
+Day -12
+
+AWS CodeCommit
+
+Implement CI/CD using AWS , we are not using any open source like jenkin, AtgoCD, GitHub for ci/cd
+
+CI/CD - Continous Integration / Continius Delivery
+
+
+AWS CodePipeline
+codeBuild
+codeDeplooy
+
+1. where the code is posted  - github use CodeCommit
+2. github trigger the webhook  - jenkins  use codePipeline
+3. build process - unit testing  - docker    use codebuild
+4. take the image into kubernets or ec2 instance - codeDeploy
 
 
 
+Check my PLAYLIST CI/CD in my youtube channel
+
+AWS CodeCommit advantage:
+ - Similar to github , bitbucket
+ - managed service
+ - Managed Git
+ - Scalability
+ - Reliability
+
+Disadvantage :
+- Very less fEATURES
+- AWS Restricted
+- Less Integrations with service outside AWS
 
 
+
+AWS- CodeCommit - Create Repo
+We can do commit , pull clone etc everything
+
+Steps :
+git clone
+user name
+password
+cd repo
+git config --user.name
+git add .
+git commit -m ""
+git push
+
+
+----------
 
 
 
