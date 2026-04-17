@@ -1,0 +1,35 @@
+Day -1
+
+What is CICD
+
+1. Continous Integration
+2. Continous Delivery
+
+CI / CD is the process to automated the application delivery
+ - Unit Testing
+ - Static Code Analayse
+ - Code Quality or Vaularability
+ - Automation Testing
+ - End to End Testing
+ - Reports
+ - Deploy the application
+
+Flow :
+App Developer --> Commit to Github -- > CI should take place
+                                   -- > CD should start once CI done
+                                   -- > for CI/CD we use JENKINS
+
+
+
+Jenkine :
+ - Act as Orgataizer which will fesilate all of the tools
+ - Devops engineer configure multiple tools in jenkin pipeline  , like sonar , alm etc
+ - we call all of the above as Pipeline
+ - Jenkin will promote your applciation to dev, stage and production
+ - Jenkin is legacy application.
+ - Compute is RAM, CPU , Hardware etc
+ - Jenkin has master and worker node
+ - Example lets take Kubernets https://github.com/kubernetes/kubernetes
+ - Github Actions is one of the alternate for Jenkin
+
+-------------
