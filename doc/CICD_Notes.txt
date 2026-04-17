@@ -41,3 +41,8 @@ ci/cd pipeline implementation overview
 user commit --> bitbuect(vcs) -- ci -- cd -- kubernets
 
 -----------
+
+Day - 3
+
+Jenkin end to end flow
+

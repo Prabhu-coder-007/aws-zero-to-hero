@@ -1847,6 +1847,22 @@ Steps :
 
 ----------
 
+Day -19
+
+Cloud Front
+
+Solution for CDN
+CDN - Content Delivery Network
+
+ - We interact CDN on our daily activities
+ - example in instagram , we use to upload image , video etc
+ - Instagram store this to Central Storage .
+ - CDN wil keep the data in multiple edge/local location
+
+ - if you are not using cloud front , then accessing the site from all over the location will be not fast
+
+ ----------
+
 
 
 
