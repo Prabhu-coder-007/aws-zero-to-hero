@@ -33,3 +33,11 @@ Jenkine :
  - Github Actions is one of the alternate for Jenkin
 
 -------------
+
+Day -2
+
+ci/cd pipeline implementation overview
+
+user commit --> bitbuect(vcs) -- ci -- cd -- kubernets
+
+-----------
