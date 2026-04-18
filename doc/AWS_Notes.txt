@@ -1909,3 +1909,428 @@ docker push 082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo-app-repo:latest
 E2E Flow : create image in your local laptop  - create tag -- push it to ECR
 
 ------------
+
+Day -21
+
+ECS - Elastic Container Service
+
+Day-24 | Docker Zero to Hero Part-1 | Must Watch | Basics to Best Practices | #docker #devops
+
+- https://www.youtube.com/watch?v=wodLpta-hoQ&list=PLdpzxOOAlwvLjb0vTD9BXLOwwLD_GWCmC&index=2
+
+Docker CLI --> Execute the command --->Docker Deamon --> create , pull , run the image
+
+Dockerfile : Set of instruction
+
+ - get me a base image , like ubundu base image
+ - put my source code into
+ - execute the command to download the dependency
+ - run docker image command to application to start.
+ - docker container is final file . has system dependency , applciation library and application itself
+ - share it with anyone in the world
+ - any one in the world download the image and they can run it on any platform
+ - docker container is lightweight .
+
+Terminalogy of Docker :
+Docker Deamon - it a service , listen to docker request and act upon the request
+docker client -
+docker deskpop -
+docker regitry - place where you store the docker iamge . example dockerHub
+dockerfile -
+iamge -
+
+
+https://app.docker.com/accounts/prabhudocker336
+
+sudo apt install docer.io
+
+root@ip-172-31-35-243:~# sudo apt install docker.io
+
+root@ip-172-31-35-243:~# sudo systemctl status docker
+
+root@ip-172-31-35-243:~# docker run hello-world
+
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file# docker build -t prabhudocker336/my-first-docker-image:latest .
+
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file# docker run -it prabhudocker336/my-first-docker-image:latest
+Hello World
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file#
+
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file# docker push prabhudocker336/my-first-docker-image:latest
+
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file# docker pull prabhudocker336/my-first-docker-image:latest
+latest: Pulling from prabhudocker336/my-first-docker-image
+Digest: sha256:9a70a5ba9edf12927bfc805d34671056cd0372353d9f0fd86e400a411ecdf00c
+Status: Image is up to date for prabhudocker336/my-first-docker-image:latest
+docker.io/prabhudocker336/my-first-docker-image:latest
+
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file# docker images
+                                                                                                                             i Info →   U  In Use
+IMAGE                                          ID             DISK USAGE   CONTENT SIZE   EXTRA
+abhishekf5/my-first-docker-image:latest        9a70a5ba9edf        814MB          217MB    U
+hello-world:latest                             f9078146db2e       25.9kB         9.49kB    U
+prabhudocker336/my-first-docker-image:latest   9a70a5ba9edf        814MB          217MB    U
+ubuntu:latest                                  c4a8d5503dfb        119MB         31.7MB
+root@ip-172-31-35-243:~/Docker-Zero-to-Hero/examples/first-docker-file#
+
+Docker Disadvantage
+ - Single point of host
+ - Auto healing
+ - Auto Scalling
+ - Docker doesnt any enterprize level support ,
+ - loadbalancer , firewall ,auto heal, auto scalling , api gateway etc : Enterprize level support
+
+Kubernets :
+  - Kubernetes solve all the above 4 probles like single host, auto healing , auto scalling , enterprize support
+Solving problem number 1 :
+  - Kubernets is a cluster
+  - Cluster is group of nodes
+  - One master and multiple worker nodes
+  - if any application is stuck , it will put the applciation in other nodes
+
+Auto Scalling :
+ - ReplicaSet
+ - Everything in yaml file
+ - HPS - Horizonatal pod
+
+Auto Healing :
+  - Kubernets contraol and fix the demage
+  - One of your container is going down due to some issue , using auto healing is any container is going down it will create a new container
+  - API calls
+  - Rollout new container
+
+Enterprize Level Container Orgstration platform :
+  - No one use docker container in production , since its not enterprize level support
+
+K8S -
+
+Kubernets Architecture :
+
+1. Control plane
+-API Server
+- Controler
+- etcd
+-sceduler
+-cloud controler
+2. Workder plane
+- Kube -proxy
+- kubelet
+- container runtime
+
+Minikube
+ - install minikube
+ - install kubectl
+
+https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Farm64%2Fstable%2Fbinary+download
+
+prabhu@Prabhus-MacBook-Air ~ % curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-darwin-arm64
+sudo install minikube-darwin-arm64 /usr/local/bin/minikube
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  129M  100  129M    0     0  10.5M      0  0:00:12  0:00:12 --:--:-- 12.4M
+Password:
+prabhu@Prabhus-MacBook-Air ~ % minikube start
+
+😄  minikube v1.38.1 on Darwin 26.4.1 (arm64)
+✨  Automatically selected the docker driver
+❗  Starting v1.39.0, minikube will default to "containerd" container runtime. See #21973 for more info.
+📌  Using Docker Desktop driver with root privileges
+👍  Starting "minikube" primary control-plane node in "minikube" cluster
+🚜  Pulling base image v0.0.50 ...
+💾  Downloading Kubernetes v1.35.1 preload ...
+    > preloaded-images-k8s-v18-v1...:  243.95 MiB / 243.95 MiB  100.00% 11.03 M
+    > gcr.io/k8s-minikube/kicbase...:  483.40 MiB / 483.40 MiB  100.00% 7.67 Mi
+🔥  Creating docker container (CPUs=2, Memory=3072MB) ...
+🐳  Preparing Kubernetes v1.35.1 on Docker 29.2.1 ...
+🔗  Configuring bridge CNI (Container Networking Interface) ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+prabhu@Prabhus-MacBook-Air ~ % kubectl version --client
+prabhu@Prabhus-MacBook-Air ~ % kubectl version --client
+
+Client Version: v1.34.1
+Kustomize Version: v5.7.1
+prabhu@Prabhus-MacBook-Air ~ % kubectl get nodes
+NAME       STATUS   ROLES           AGE   VERSION
+minikube   Ready    control-plane   14m   v1.35.1
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pods
+No resources found in default namespace.
+prabhu@Prabhus-MacBook-Air ~ %
+
+prabhu@Prabhus-MacBook-Air ~ % minikube
+minikube provisions and manages local Kubernetes clusters optimized for development workflows.
+
+Basic Commands:
+  start            Starts a local Kubernetes cluster
+  status           Gets the status of a local Kubernetes cluster
+  stop             Stops a running local Kubernetes cluster
+  delete           Deletes a local Kubernetes cluster
+  dashboard        Access the Kubernetes dashboard running within the minikube cluster
+  pause            pause Kubernetes
+  unpause          unpause Kubernetes
+
+Images Commands:
+  docker-env       Provides instructions to point your terminal's docker-cli to the Docker Engine inside minikube.
+(Useful for building docker images directly inside minikube)
+  podman-env       Configure environment to use minikube's Podman service
+  cache            Manage cache for images
+  image            Manage images
+
+Configuration and Management Commands:
+  addons           Enable or disable a minikube addon
+  config           Modify persistent configuration values
+  profile          Get or list the current profiles (clusters)
+  update-context   Update kubeconfig in case of an IP or port change
+
+Networking and Connectivity Commands:
+  service          Returns a URL to connect to a service
+  tunnel           Connect to LoadBalancer services
+
+Advanced Commands:
+  mount            Mounts the specified directory into minikube
+  ssh              Log into the minikube environment (for debugging)
+  kubectl          Run a kubectl binary matching the cluster version
+  node             Add, remove, or list additional nodes
+  cp               Copy the specified file into minikube
+
+Troubleshooting Commands:
+  ssh-key          Retrieve the ssh identity key path of the specified node
+  ssh-host         Retrieve the ssh host key of the specified node
+  ip               Retrieves the IP address of the specified node
+  logs             Returns logs to debug a local Kubernetes cluster
+  update-check     Print current and latest version number
+  version          Print the version of minikube
+  options          Show a list of global command-line options (applies to all commands).
+
+Other Commands:
+  completion       Generate command completion for a shell
+  license          Outputs the licenses of dependencies to a directory
+
+Use "minikube <command> --help" for more information about a given command.
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+
+
+Client Version: v1.34.1
+Kustomize Version: v5.7.1
+prabhu@Prabhus-MacBook-Air ~ %
+
+pod :
+ - Definiation of how to run the container
+ - 1 or group of containers (sidecar container , init container )
+
+
+minikube :
+- minikube start
+- it will create a virutal machine
+- single node kubernets cluster
+
+vim pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+
+kubectl applty -f pod.yml
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pod -o wide
+NAME    READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+nginx   1/1     Running   0          3m19s   10.244.0.4   minikube   <none>           <none>
+prabhu@Prabhus-MacBook-Air ~ % minikube ssh
+Linux minikube 6.12.76-linuxkit #1 SMP Sun Mar  8 14:41:59 UTC 2026 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+docker@minikube:~$ curl 10.244.0.4
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+docker@minikube:~$
+
+
+https://kubernetes.io/docs/reference/kubectl/quick-reference/
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pod
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          9m29s
+prabhu@Prabhus-MacBook-Air ~ % kubectl logs pod nginx
+error: error from server (NotFound): pods "pod" not found in namespace "default"
+prabhu@Prabhus-MacBook-Air ~ % kubectl logs pods nginx
+error: error from server (NotFound): pods "pods" not found in namespace "default"
+prabhu@Prabhus-MacBook-Air ~ % kubect get pod
+zsh: command not found: kubect
+prabhu@Prabhus-MacBook-Air ~ % kubect get pods
+zsh: command not found: kubect
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pods
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          10m
+prabhu@Prabhus-MacBook-Air ~ % kubectl logs -f nginx
+10.244.0.1 - - [18/Apr/2026:14:04:41 +0000] "GET / HTTP/1.1" 200 612 "-" "curl/7.88.1" "-"
+:
+:q
+exit
+^C%                                                                                                                                              prabhu@Prabhus-MacBook-Air ~ % kubectl describe pod nginx
+Name:             nginx
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 18 Apr 2026 19:31:03 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.4
+IPs:
+  IP:  10.244.0.4
+Containers:
+  nginx:
+    Container ID:   docker://178ca471973daf8b303c39624933e73c5aac7eb274b96dbba6d3e3afd1329dcb
+    Image:          nginx:1.14.2
+    Image ID:       docker-pullable://nginx@sha256:f7988fb6c02e0ce69257d9bd9cf37ae20a60f1df7563c3a2a6abe24160306b8d
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 18 Apr 2026 19:31:13 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7x266 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-7x266:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  11m   default-scheduler  Successfully assigned default/nginx to minikube
+  Normal  Pulling    11m   kubelet            Pulling image "nginx:1.14.2"
+  Normal  Pulled     10m   kubelet            Successfully pulled image "nginx:1.14.2" in 10.105s (10.105s including waiting). Image size: 102757429 bytes.
+  Normal  Created    10m   kubelet            Container created
+  Normal  Started    10m   kubelet            Container started
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get events
+LAST SEEN   TYPE     REASON                    OBJECT          MESSAGE
+42m         Normal   Starting                  node/minikube   Starting kubelet.
+42m         Normal   NodeAllocatableEnforced   node/minikube   Updated Node Allocatable limit across pods
+42m         Normal   NodeHasSufficientMemory   node/minikube   Node minikube status is now: NodeHasSufficientMemory
+42m         Normal   NodeHasNoDiskPressure     node/minikube   Node minikube status is now: NodeHasNoDiskPressure
+42m         Normal   NodeHasSufficientPID      node/minikube   Node minikube status is now: NodeHasSufficientPID
+42m         Normal   NodeReady                 node/minikube   Node minikube status is now: NodeReady
+42m         Normal   RegisteredNode            node/minikube   Node minikube event: Registered Node minikube in Controller
+42m         Normal   Starting                  node/minikube
+17m         Normal   Starting                  node/minikube
+17m         Normal   RegisteredNode            node/minikube   Node minikube event: Registered Node minikube in Controller
+11m         Normal   Scheduled                 pod/nginx       Successfully assigned default/nginx to minikube
+11m         Normal   Pulling                   pod/nginx       Pulling image "nginx:1.14.2"
+11m         Normal   Pulled                    pod/nginx       Successfully pulled image "nginx:1.14.2" in 10.105s (10.105s including waiting). Image size: 102757429 bytes.
+11m         Normal   Created                   pod/nginx       Container created
+11m         Normal   Started                   pod/nginx       Container started
+prabhu@Prabhus-MacBook-Air ~ %
+
+Deployment :
+ - Auto Scalling  (Replicaset - Kubernets Controler)
+ - Auto Healing ( Kubernets Controler : Zero Downtime , new pod will be created )
+
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+
+prabhu@Prabhus-MacBook-Air ~ % vim Deployment.yml
+prabhu@Prabhus-MacBook-Air ~ % kubectl apply -f Deployment.yml
+deployment.apps/nginx-deployment created
+prabhu@Prabhus-MacBook-Air ~ % kubectl get all
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/nginx-deployment-77bc6bd484-9hskp   1/1     Running   0          5s
+pod/nginx-deployment-77bc6bd484-bqzsk   1/1     Running   0          5s
+pod/nginx-deployment-77bc6bd484-rz4wp   1/1     Running   0          5s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   5m56s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deployment   3/3     3            3           5s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deployment-77bc6bd484   3         3         3       5s
+prabhu@Prabhus-MacBook-Air ~ %
+
+Kubernets Service :
+
+
+
