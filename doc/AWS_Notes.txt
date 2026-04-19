@@ -2332,5 +2332,96 @@ prabhu@Prabhus-MacBook-Air ~ %
 
 Kubernets Service :
 
+why Service ?
+- If its no servie
+- Service act as load balancer and send the request to pods
+
+- Service discovery
+- IP address can keep change for pod , so servcie will keep record for labels and selectors
+- Every pod is getting created is applied with label , like payment
+- Service will watch for labels not for IP address . since label will be same .
+- This is called servie discorvery
+
+- Exposing the application to the world
+- How it will do ?
+- If you create a servie with Cluster ip , it will be accessible with in kubernets
+- if its Node port , it will allow inside your organization
+- if its  load balancer , to external world any one can access from outside world
+
+kubectl get pods -o wide
+
+kubectl get pod -v-7/9
+
+Servcie :
+ - Kubernets pods recreate then ip address is dynamic
+ - for this reason only we need service discovery .
+ - So kubernets use labels and selectors
+ - Kubernets identify the pods with label and selector
+ - Becasue label and selector wont change
+
+kubectl get svc
+
+Ingress :
+ - why ingress ?
+ - what problem its solving
+ - Servcie load balancer use roundrabin , like total 10 request then each pod will get 5 request
+ - Peopele were in Virutal Machine they have lot of feasility likes sticky, domain , host , tls features etc
+ - But in kubernets we have only servie - basic load balancer
+ - For load balancer service cloud provider charge for each and every static public ips . these are the two problem ingress solving
+ -
+
+
+Kubernets Cluster --> Pod --> Kubelet --> deploy in one of the node
+Kubernets Service --> svc --> kubeproxy --> update the ip table
+Kubernets ingress -->  load balancing compnay (ngnix, etc) they will write ingress controler - >
+ingress = load balancer + api gateway
+ingress with out ingress controler there is no use . ingress controler can be ngnix , etc
+
+- host based load balancer , like example.com/abc
+-
+https://kubernetes.io/docs/concepts/services-networking/ingress/
+https://projectcontour.io/
+prabhu@Prabhus-MacBook-Air Downloads % minikube addons enable ingress
+
+ConfigMap :
+  - Is to use to store data . this data can be used by app , pod
+  - non-sentive data
+
+Secrets :
+  - Secrets store senstive data
+  - we will encrypt teh data and store it in etcd as a object
+  - etcd wil lstore all the kubernets resource as object
+  - when you craete a secret grant RBAC (least Privilage - only required access , not full access )
+
+End to End flow :
+  User --> create config map yaml resource -- kubectl apply --> API Server save config map in --etcd
+
+VolumeMount :
+ - use them as file
+ - volumne is nothing but a storage .
+ - volumes :
+     - name : db-connection
+       configMap:
+         name : test-cm.yml
+   volumneMounts:
+     name :
+
+RBAC :
+ - Role Basaed Access Control
+ - Simple topic to understand
+ - Type : 1. Users 2 .Service Account
+ -
+
+Kubernets Monitoring/Observability : Grafana / Promotheus
+ - Promothesu open source
+ - then why Grafana ? Grafana for better Visuvalization .
+
+- Promothesu Server connect with kubernets cluster and get all the information .
+- Kubernets API Server has all the information
+- Promotheus store the metrics on some time series . like 1 min , 5 min etc
+- Promethus can push teh alert to alert manager . alert manager send the alert to particular team .
+- Using promethous query you can get teh metrics or use Grafana for data visulation.
+
+
 
 
