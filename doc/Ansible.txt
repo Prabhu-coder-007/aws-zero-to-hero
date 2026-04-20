@@ -1,0 +1,126 @@
+https://github.com/Prabhu-coder-007/ansible-zero-to-hero/tree/main/Day-01
+
+Day -1
+
+Olden days System admin of the company will check for their software
+1. up to date of os
+2. Application depenecy are up to date . java / pyhton
+3. maintence
+4. configuration managment
+
+he was doing it manually . so it was creating the issue
+Because they have multiple machine , un=buntu , cent os , debion, alpine, windows , etc
+
+To solve this problem  Puppet ,cheif , salt ,Ansible
+6-7 years back  Puppet ,cheif was popular
+
+System admin --->  (Puppet ,cheif) --> comvert to python   ---> Actual Infra ( linux , window, etc )
+here challenge is --> learning ruby for puppet and checif
+                  --> they are not agent less . means they need to go to each machine and install agent on it .
+                  --> pupet/cheif has complex coding
+To solve this Ansible came
+   -> you have to know just YAML /YML
+   -> So every one is happy
+   -> Ansible Play books
+   --> We are also agent   . so you no need to install anythign on actual infra
+   --> Control node : Machine where you install Ansible software called control node
+       Manage Node : Actual infa . SHOULD HAVE PYTHON
+   --> End to End flow
+       create yaml file --> run it in Control node --> All manage node can be update the software etc
+Ansbile will do only configuration ?
+   --> No
+   --> Its powerful automation platform
+   --> Configuration Management is one of the feature
+   --> Ansbile do Provisiong , similar to terraform how it provising EC2 instance etc
+   --> Used for Deployment in CI/CD
+   --> Also used for Network automation
+
+Ansible vs Shell vs Python :
+ So which one you will choose ?
+
+  --> Shell script to install java  # if one of the vm is windows , ubntu , linux then it wont work
+  --> Python u can install   #  you need to know python programming , update the python script , system admin has to know python verl well
+  --> Ansible you can install  # no programming language just YAML/yml
+
+How to install Ansbile ?
+ - https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
+    Installing and upgrading Ansible with pip
+
+Control Node :
+ - python should be there
+Manage Node :
+ - python should be there
+
+Last login: Mon Apr 20 17:03:04 on ttys001
+prabhu@Prabhus-MacBook-Air ~ %
+prabhu@Prabhus-MacBook-Air ~ % $ python3 -m pip -V
+zsh: command not found: $
+prabhu@Prabhus-MacBook-Air ~ % python3 -m pip -V
+pip 21.2.4 from /Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site-packages/pip (python 3.9)
+prabhu@Prabhus-MacBook-Air ~ % python3 -m pip install --user ansible
+Collecting ansible
+  Downloading ansible-8.7.0-py3-none-any.whl (48.4 MB)
+     |████████████████████████████████| 48.4 MB 511 kB/s
+Collecting ansible-core~=2.15.7
+  Downloading ansible_core-2.15.13-py3-none-any.whl (2.3 MB)
+     |████████████████████████████████| 2.3 MB 10.0 MB/s
+Collecting PyYAML>=5.1
+  Downloading pyyaml-6.0.3-cp39-cp39-macosx_11_0_arm64.whl (174 kB)
+     |████████████████████████████████| 174 kB 32.1 MB/s
+Collecting packaging
+  Downloading packaging-26.1-py3-none-any.whl (95 kB)
+     |████████████████████████████████| 95 kB 30.7 MB/s
+Collecting importlib-resources<5.1,>=5.0
+  Downloading importlib_resources-5.0.7-py3-none-any.whl (24 kB)
+Collecting jinja2>=3.0.0
+  Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+     |████████████████████████████████| 134 kB 23.1 MB/s
+Collecting cryptography
+  Downloading cryptography-46.0.7-cp38-abi3-macosx_10_9_universal2.whl (7.2 MB)
+     |████████████████████████████████| 7.2 MB 7.2 MB/s
+Collecting resolvelib<1.1.0,>=0.5.3
+  Downloading resolvelib-1.0.1-py2.py3-none-any.whl (17 kB)
+Collecting MarkupSafe>=2.0
+  Downloading markupsafe-3.0.3-cp39-cp39-macosx_11_0_arm64.whl (12 kB)
+Collecting typing-extensions>=4.13.2
+  Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+     |████████████████████████████████| 44 kB 9.5 MB/s
+Collecting cffi>=2.0.0
+  Downloading cffi-2.0.0-cp39-cp39-macosx_11_0_arm64.whl (180 kB)
+     |████████████████████████████████| 180 kB 31.7 MB/s
+Collecting pycparser
+  Downloading pycparser-2.23-py3-none-any.whl (118 kB)
+     |████████████████████████████████| 118 kB 24.8 MB/s
+Installing collected packages: pycparser, typing-extensions, MarkupSafe, cffi, resolvelib, PyYAML, packaging, jinja2, importlib-resources, cryptography, ansible-core, ansible
+  WARNING: The scripts ansible, ansible-config, ansible-connection, ansible-console, ansible-doc, ansible-galaxy, ansible-inventory, ansible-playbook, ansible-pull and ansible-vault are installed in '/Users/prabhu/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script ansible-community is installed in '/Users/prabhu/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed MarkupSafe-3.0.3 PyYAML-6.0.3 ansible-8.7.0 ansible-core-2.15.13 cffi-2.0.0 cryptography-46.0.7 importlib-resources-5.0.7 jinja2-3.1.6 packaging-26.1 pycparser-2.23 resolvelib-1.0.1 typing-extensions-4.15.0
+WARNING: You are using pip version 21.2.4; however, version 26.0.1 is available.
+You should consider upgrading via the '/Applications/Xcode.app/Contents/Developer/usr/bin/python3 -m pip install --upgrade pip' command.
+prabhu@Prabhus-MacBook-Air ~ % ansible --version
+zsh: command not found: ansible
+prabhu@Prabhus-MacBook-Air ~ % Ansible --version
+zsh: command not found: Ansible
+prabhu@Prabhus-MacBook-Air ~ % ansible help
+zsh: command not found: ansible
+prabhu@Prabhus-MacBook-Air ~ % echo 'export PATH="$PATH:/Users/prabhu/Library/Python/3.9/bin"' >> ~/.zshrc
+prabhu@Prabhus-MacBook-Air ~ % source ~/.zshrc
+prabhu@Prabhus-MacBook-Air ~ % ansible --version
+ansible [core 2.15.13]
+  config file = None
+  configured module search path = ['/Users/prabhu/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /Users/prabhu/Library/Python/3.9/lib/python/site-packages/ansible
+  ansible collection location = /Users/prabhu/.ansible/collections:/usr/share/ansible/collections
+  executable location = /Users/prabhu/Library/Python/3.9/bin/ansible
+  python version = 3.9.6 (default, Apr  7 2026, 02:38:40) [Clang 21.0.0 (clang-2100.0.123.102)] (/Applications/Xcode.app/Contents/Developer/usr/bin/python3)
+  jinja version = 3.1.6
+  libyaml = True
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+Day -2
+
+
+
