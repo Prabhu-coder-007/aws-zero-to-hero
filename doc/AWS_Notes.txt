@@ -2421,6 +2421,360 @@ Kubernets Monitoring/Observability : Grafana / Promotheus
 - Promotheus store the metrics on some time series . like 1 min , 5 min etc
 - Promethus can push teh alert to alert manager . alert manager send the alert to particular team .
 - Using promethous query you can get teh metrics or use Grafana for data visulation.
+- kubernets/api-server/metrics will expose lot of metrics
+- PromQuery in Promotheus UI
+
+Create Kubernets Cluster
+ prabhu@Prabhus-MacBook-Air ~ % minikube start --driver=docker --memory=4098 --cpus=2 --delete-on-failure
+ 😄  minikube v1.38.1 on Darwin 26.4.1 (arm64)
+ ✨  Using the docker driver based on user configuration
+ ❗  Starting v1.39.0, minikube will default to "containerd" container runtime. See #21973 for more info.
+ 📌  Using Docker Desktop driver with root privileges
+ 👍  Starting "minikube" primary control-plane node in "minikube" cluster
+ 🚜  Pulling base image v0.0.50 ...
+ 🔥  Creating docker container (CPUs=2, Memory=4098MB) ...
+ 🐳  Preparing Kubernetes v1.35.1 on Docker 29.2.1 ...
+ 🔗  Configuring bridge CNI (Container Networking Interface) ...
+ 🔎  Verifying Kubernetes components...
+     ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+ 🌟  Enabled addons: default-storageclass, storage-provisioner
+ 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+ prabhu@Prabhus-MacBook-Air ~ % kubectl get all
+ NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   36s
+ prabhu@Prabhus-MacBook-Air ~ % helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+ zsh: command not found: helm
+ prabhu@Prabhus-MacBook-Air ~ % brew install helm
+ zsh: command not found: brew
+ prabhu@Prabhus-MacBook-Air ~ % /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ ==> Checking for `sudo` access (which may request your password)...
+ Password:
+ ==> This script will install:
+ /opt/homebrew/bin/brew
+ /opt/homebrew/share/doc/homebrew
+ /opt/homebrew/share/man/man1/brew.1
+ /opt/homebrew/share/zsh/site-functions/_brew
+ /opt/homebrew/etc/bash_completion.d/brew
+ /opt/homebrew
+ /etc/paths.d/homebrew
+ ==> The following new directories will be created:
+ /opt/homebrew/bin
+ /opt/homebrew/etc
+ /opt/homebrew/include
+ /opt/homebrew/lib
+ /opt/homebrew/sbin
+ /opt/homebrew/share
+ /opt/homebrew/var
+ /opt/homebrew/opt
+ /opt/homebrew/share/zsh
+ /opt/homebrew/share/zsh/site-functions
+ /opt/homebrew/var/homebrew
+ /opt/homebrew/var/homebrew/linked
+ /opt/homebrew/Cellar
+ /opt/homebrew/Caskroom
+ /opt/homebrew/Frameworks
+
+ Press RETURN/ENTER to continue or any other key to abort:
+ ==> /usr/bin/sudo /usr/bin/install -d -o root -g wheel -m 0755 /opt/homebrew
+ ==> /usr/bin/sudo /bin/mkdir -p /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+ ==> /usr/bin/sudo /bin/chmod ug=rwx /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+ ==> /usr/bin/sudo /bin/chmod go-w /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions
+ ==> /usr/bin/sudo /usr/sbin/chown prabhu /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+ ==> /usr/bin/sudo /usr/bin/chgrp admin /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+ ==> /usr/bin/sudo /usr/sbin/chown -R prabhu:admin /opt/homebrew
+ ==> Downloading and installing Homebrew...
+ remote: Enumerating objects: 330072, done.
+ remote: Counting objects: 100% (863/863), done.
+ remote: Compressing objects: 100% (362/362), done.
+ remote: Total 330072 (delta 694), reused 545 (delta 501), pack-reused 329209 (from 3)
+ remote: Enumerating objects: 55, done.
+ remote: Counting objects: 100% (33/33), done.
+ remote: Total 55 (delta 33), reused 33 (delta 33), pack-reused 22 (from 1)
+ ==> /usr/bin/sudo /bin/mkdir -p /etc/paths.d
+ ==> /usr/bin/sudo tee /etc/paths.d/homebrew
+ /opt/homebrew/bin
+ ==> /usr/bin/sudo /usr/sbin/chown root:wheel /etc/paths.d/homebrew
+ ==> /usr/bin/sudo /bin/chmod a+r /etc/paths.d/homebrew
+ ==> Updating Homebrew...
+ ==> Downloading https://ghcr.io/v2/homebrew/core/portable-ruby/blobs/sha256:f41c72b891c40623f9d5cd2135f58a1b8a5c014ae04149888289409316276c72
+ ########################################################################################################################################################## 100.0%
+ ==> Pouring portable-ruby-4.0.2_1.arm64_big_sur.bottle.tar.gz
+ ==> Installation successful!
+
+ ==> Homebrew has enabled anonymous aggregate formulae and cask analytics.
+ Read the analytics documentation (and how to opt-out) here:
+   https://docs.brew.sh/Analytics
+ No analytics data has been sent yet (nor will any be during this install run).
+
+ ==> Homebrew is run entirely by unpaid volunteers. Please consider donating:
+   https://github.com/Homebrew/brew#donations
+
+ ==> Next steps:
+ - Run these commands in your terminal to add Homebrew to your PATH:
+     echo >> /Users/prabhu/.zprofile
+     echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/prabhu/.zprofile
+     eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+ - Run brew help to get started
+ - Further documentation:
+     https://docs.brew.sh
+
+ prabhu@Prabhus-MacBook-Air ~ % echo >> /Users/prabhu/.zprofile
+     echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/prabhu/.zprofile
+     eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+ prabhu@Prabhus-MacBook-Air ~ % brew help
+ Example usage:
+   brew search TEXT|/REGEX/
+   brew info [FORMULA|CASK...]
+   brew install FORMULA|CASK...
+   brew update
+   brew upgrade [FORMULA|CASK...]
+   brew uninstall FORMULA|CASK...
+   brew list [FORMULA|CASK...]
+
+ Troubleshooting:
+   brew config
+   brew doctor
+   brew install --verbose --debug FORMULA|CASK
+
+ Contributing:
+   brew create URL [--no-fetch]
+   brew edit [FORMULA|CASK...]
+
+ Further help:
+   brew commands
+   brew help [COMMAND]
+   man brew
+   https://docs.brew.sh
+ prabhu@Prabhus-MacBook-Air ~ % brew install helm
+ ==> Fetching downloads for: helm
+ ✔︎ Bottle Manifest helm (4.1.4)                                                                                                        Downloaded    7.4KB/  7.4KB
+ ✔︎ Bottle helm (4.1.4)                                                                                                                 Downloaded   18.1MB/ 18.1MB
+ ==> Pouring helm--4.1.4.arm64_tahoe.bottle.tar.gz
+ 🍺  /opt/homebrew/Cellar/helm/4.1.4: 69 files, 61.3MB
+ ==> Running `brew cleanup helm`...
+ Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+ Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+ ==> Caveats
+ zsh completions have been installed to:
+   /opt/homebrew/share/zsh/site-functions
+ prabhu@Prabhus-MacBook-Air ~ % helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+ helm repo update
+ "prometheus-community" has been added to your repositories
+ Hang tight while we grab the latest from your chart repositories...
+ ...Successfully got an update from the "prometheus-community" chart repository
+ Update Complete. ⎈Happy Helming!⎈
+ prabhu@Prabhus-MacBook-Air ~ %
+
+
+Install prometheus now :
+
+helm install prometheus prometheus-community/prometheus
+
+prabhu@Prabhus-MacBook-Air ~ % helm install prometheus prometheus-community/prometheus
+NAME: prometheus
+LAST DEPLOYED: Mon Apr 20 13:20:54 2026
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+The Prometheus server can be accessed via port 80 on the following DNS name from within your cluster:
+prometheus-server.default.svc.cluster.local
+
+
+Get the Prometheus server URL by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=prometheus,app.kubernetes.io/instance=prometheus" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace default port-forward $POD_NAME 9090
+
+Prometheus alertmanager can be accessed via port 9093 on the following DNS name from within your cluster:
+prometheus-alertmanager.default.svc.cluster.local
+
+
+Get the Alertmanager URL by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=alertmanager,app.kubernetes.io/instance=prometheus" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace default port-forward $POD_NAME 9093
+
+Prometheus Pushgateway can be accessed via port 9091 on the following DNS name from within your cluster:
+prometheus-prometheus-pushgateway.default.svc.cluster.local
+
+
+Get the Pushgateway URL by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=prometheus-pushgateway,app.kubernetes.io/instance=prometheus" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace default port-forward $POD_NAME 9091
+
+For more information on running Prometheus, visit:
+https://prometheus.io/
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pods
+NAME                                                 READY   STATUS    RESTARTS   AGE
+prometheus-alertmanager-0                            1/1     Running   0          89s
+prometheus-kube-state-metrics-978b59b4c-2kn4w        1/1     Running   0          89s
+prometheus-prometheus-node-exporter-jxvtx            1/1     Running   0          89s
+prometheus-prometheus-pushgateway-75b8bf7c77-lpsq6   1/1     Running   0          89s
+prometheus-server-54787c5db5-rrlmm                   1/2     Running   0          89s
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP    20m
+prometheus-alertmanager               ClusterIP   10.109.182.242   <none>        9093/TCP   12m
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP   12m
+prometheus-kube-state-metrics         ClusterIP   10.107.1.173     <none>        8080/TCP   12m
+prometheus-prometheus-node-exporter   ClusterIP   10.97.17.62      <none>        9100/TCP   12m
+prometheus-prometheus-pushgateway     ClusterIP   10.105.94.57     <none>        9091/TCP   12m
+prometheus-server                     ClusterIP   10.100.139.38    <none>        80/TCP     12m
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+service/prometheus-server-ext exposed
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP        24m
+prometheus-alertmanager               ClusterIP   10.109.182.242   <none>        9093/TCP       16m
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP       16m
+prometheus-kube-state-metrics         ClusterIP   10.107.1.173     <none>        8080/TCP       16m
+prometheus-prometheus-node-exporter   ClusterIP   10.97.17.62      <none>        9100/TCP       16m
+prometheus-prometheus-pushgateway     ClusterIP   10.105.94.57     <none>        9091/TCP       16m
+prometheus-server                     ClusterIP   10.100.139.38    <none>        80/TCP         16m
+prometheus-server-ext                 NodePort    10.99.97.43      <none>        80:30441/TCP   41s
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % minikube ip
+192.168.49.2
+prabhu@Prabhus-MacBook-Air ~ % minikube service prometheus-server-ext
+┌───────────┬───────────────────────┬─────────────┬───────────────────────────┐
+│ NAMESPACE │         NAME          │ TARGET PORT │            URL            │
+├───────────┼───────────────────────┼─────────────┼───────────────────────────┤
+│ default   │ prometheus-server-ext │ 80          │ http://192.168.49.2:30441 │
+└───────────┴───────────────────────┴─────────────┴───────────────────────────┘
+🔗  Starting tunnel for service prometheus-server-ext.
+┌───────────┬───────────────────────┬─────────────┬────────────────────────┐
+│ NAMESPACE │         NAME          │ TARGET PORT │          URL           │
+├───────────┼───────────────────────┼─────────────┼────────────────────────┤
+│ default   │ prometheus-server-ext │             │ http://127.0.0.1:51035 │
+└───────────┴───────────────────────┴─────────────┴────────────────────────┘
+🎉  Opening service default/prometheus-server-ext in default browser...
+❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
+^C✋  Stopping tunnel for service prometheus-server-ext.
+prabhu@Prabhus-MacBook-Air ~ % kubectl port-forward service/prometheus-server-ext 9090:80
+Forwarding from 127.0.0.1:9090 -> 9090
+Forwarding from [::1]:9090 -> 9090
+Handling connection for 9090
+Handling connection for 9090
+Handling connection for 9090
+^C%                                                                                                                                                              prabhu@Prabhus-MacBook-Air ~ % helm repo add grafana https://grafana.github.io/helm-charts
+"grafana" has been added to your repositories
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "prometheus-community" chart repository
+...Successfully got an update from the "grafana" chart repository
+Update Complete. ⎈Happy Helming!⎈
+prabhu@Prabhus-MacBook-Air ~ % helm install grafana grafana/grafana
+level=WARN msg="this chart is deprecated"
+NAME: grafana
+LAST DEPLOYED: Mon Apr 20 13:50:43 2026
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+1. Get your 'admin' user password by running:
+
+   kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:
+
+   grafana.default.svc.cluster.local
+
+   Get the Grafana URL to visit by running these commands in the same shell:
+     export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace default port-forward $POD_NAME 3000
+
+3. Login with the password from step 1 and the username: admin
+#################################################################################
+######   WARNING: Persistence is disabled!!! You will lose your data when   #####
+######            the Grafana pod is terminated.                            #####
+#################################################################################
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+RRyBDeZG82YBtNBrrUlTLk5hfipZ4fex21ZMPyXU
+prabhu@Prabhus-MacBook-Air ~ %
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+grafana                               ClusterIP   10.111.5.35      <none>        80/TCP         2m2s
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP        39m
+prometheus-alertmanager               ClusterIP   10.109.182.242   <none>        9093/TCP       31m
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP       31m
+prometheus-kube-state-metrics         ClusterIP   10.107.1.173     <none>        8080/TCP       31m
+prometheus-prometheus-node-exporter   ClusterIP   10.97.17.62      <none>        9100/TCP       31m
+prometheus-prometheus-pushgateway     ClusterIP   10.105.94.57     <none>        9091/TCP       31m
+prometheus-server                     ClusterIP   10.100.139.38    <none>        80/TCP         31m
+prometheus-server-ext                 NodePort    10.99.97.43      <none>        80:30441/TCP   15m
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+grafana                               ClusterIP   10.111.5.35      <none>        80/TCP         2m2s
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP        39m
+prometheus-alertmanager               ClusterIP   10.109.182.242   <none>        9093/TCP       31m
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP       31m
+prometheus-kube-state-metrics         ClusterIP   10.107.1.173     <none>        8080/TCP       31m
+prometheus-prometheus-node-exporter   ClusterIP   10.97.17.62      <none>        9100/TCP       31m
+prometheus-prometheus-pushgateway     ClusterIP   10.105.94.57     <none>        9091/TCP       31m
+prometheus-server                     ClusterIP   10.100.139.38    <none>        80/TCP         31m
+prometheus-server-ext                 NodePort    10.99.97.43      <none>        80:30441/TCP   15m
+prabhu@Prabhus-MacBook-Air ~ % kubectl expose service grafana --type=NodePort --target-port=0000 --name=grafana-ext
+service/grafana-ext exposed
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get svc
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+grafana                               ClusterIP   10.111.5.35      <none>        80/TCP         6m41s
+grafana-ext                           NodePort    10.106.51.112    <none>        80:32529/TCP   2m31s
+kubernetes                            ClusterIP   10.96.0.1        <none>        443/TCP        44m
+prometheus-alertmanager               ClusterIP   10.109.182.242   <none>        9093/TCP       36m
+prometheus-alertmanager-headless      ClusterIP   None             <none>        9093/TCP       36m
+prometheus-kube-state-metrics         ClusterIP   10.107.1.173     <none>        8080/TCP       36m
+prometheus-prometheus-node-exporter   ClusterIP   10.97.17.62      <none>        9100/TCP       36m
+prometheus-prometheus-pushgateway     ClusterIP   10.105.94.57     <none>        9091/TCP       36m
+prometheus-server                     ClusterIP   10.100.139.38    <none>        80/TCP         36m
+prometheus-server-ext                 NodePort    10.99.97.43      <none>        80:30441/TCP   20m
+prabhu@Prabhus-MacBook-Air ~ %
+
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pods | grep grafana
+grafana-7545f45b69-fvr4j                             1/1     Running   0          15m
+prabhu@Prabhus-MacBook-Air ~ % kubectl get pods -o wide | grep grafana
+grafana-7545f45b69-fvr4j                             1/1     Running   0          16m   10.244.0.7     minikube   <none>           <none>
+prabhu@Prabhus-MacBook-Air ~ % kubectl port-forward pod/grafana-7545f45b69-fvr4j 3001:3000
+Forwarding from 127.0.0.1:3001 -> 3000
+Forwarding from [::1]:3001 -> 3000
+Handling connection for 3001
+Handling connection for 3001
+Handling connection for 3001
+Handling connection for 3001
+Handling connection for 3001
+Handling connection for 3001
+Handling connection for 3001
+
+
+http://localhost:3001/?orgId=1&from=now-6h&to=now&timezone=browser
 
 
 
