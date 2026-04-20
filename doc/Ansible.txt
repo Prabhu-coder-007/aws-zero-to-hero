@@ -118,9 +118,96 @@ ansible [core 2.15.13]
   jinja version = 3.1.6
   libyaml = True
 prabhu@Prabhus-MacBook-Air ~ %
-
+-------------
 
 Day -2
 
+- Passwordless Authentication
+- Implementation
+- Ansible Inventory ( heart of invisible)
+- Ansible Adhoc commands
 
+
+Password less Authetication :
+  - Pre-req for Ansbile
+  - Control node / Master where ansible is install
+  - Instruction can be provided by yaml/adhoc comments
+  - By default manage node ask for password / ssh key for login from control node
+  - Here comes password less b/w control node / manage node
+  - What is password less authentication ? Tell manage node to accept the request from control node with out password .
+    that means first time only you need to provide the pwd/.pem file . from next time it wont ask for password
+
+prabhu@Prabhus-MacBook-Air ~ % ssh-keygen -t rsa -b 4096
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/prabhu/.ssh/id_rsa):
+Enter passphrase for "/Users/prabhu/.ssh/id_rsa" (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/prabhu/.ssh/id_rsa
+Your public key has been saved in /Users/prabhu/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:kgNWn6LYTTMBxPeLze+WhZrFxO/TRVD2w0NQK8pRdPw prabhu@Prabhus-MacBook-Air.local
+The key's randomart image is:
++---[RSA 4096]----+
+|   oo.o     .++=o|
+|    ...o .  . =oo|
+|    o.=.o. . . *o|
+|   + = =. + o . E|
+|  . o =+S+ =   . |
+|      .o+ + o   .|
+|         = + . . |
+|        o + o .  |
+|         o.  .   |
++----[SHA256]-----+
+prabhu@Prabhus-MacBook-Air ~ % ssh-copy-id -f "-o IdentityFile ~/Downloads/aws-key-ansible.pem" ubuntu@54.80.123.253
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/prabhu/.ssh/id_rsa.pub"
+The authenticity of host '54.80.123.253 (54.80.123.253)' can't be established.
+ED25519 key fingerprint is: SHA256:f2wSxfuaDvsOSBQrcuOyRE70KSJl42gZpS4KUWndv7k
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+
+Number of key(s) added:        1
+
+Now try logging into the machine, with: "ssh -o ' IdentityFile ~/Downloads/aws-key-ansible.pem' 'ubuntu@54.80.123.253'"
+and check to make sure that only the key(s) you wanted were added.
+
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % ssh -o ' IdentityFile ~/Downloads/aws-key-ansible.pem' 'ubuntu@54.80.123.253'
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.17.0-1007-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Apr 20 15:23:03 UTC 2026
+
+  System load:  0.02              Temperature:           -273.1 C
+  Usage of /:   26.8% of 6.71GB   Processes:             113
+  Memory usage: 25%               Users logged in:       0
+  Swap usage:   0%                IPv4 address for ens5: 172.31.44.69
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+ubuntu@ip-172-31-44-69:~$ ssh ubuntu@54.80.123.253
+The authenticity of host '54.80.123.253 (54.80.123.253)' can't be established.
+ED25519 key fingerprint is SHA256:f2wSxfuaDvsOSBQrcuOyRE70KSJl42gZpS4KUWndv7k.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '54.80.123.253' (ED25519) to the list of known hosts.
+ubuntu@54.80.123.253: Permission denied (publickey).
+ubuntu@ip-172-31-44-69:~$
 
