@@ -211,3 +211,397 @@ Warning: Permanently added '54.80.123.253' (ED25519) to the list of known hosts.
 ubuntu@54.80.123.253: Permission denied (publickey).
 ubuntu@ip-172-31-44-69:~$
 
+
+Password authentication :
+
+prabhu@Prabhus-MacBook-Air ~ % ssh -i Downloads/aws-key-ansible.pem ubuntu@3.81.6.95
+The authenticity of host '3.81.6.95 (3.81.6.95)' can't be established.
+ED25519 key fingerprint is: SHA256:vziW4L8QyvkODfiCzhF79PCIynUG0c4NZOwPzMOVNhE
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '3.81.6.95' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.17.0-1007-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Apr 21 07:01:28 UTC 2026
+
+  System load:  0.0               Temperature:           -273.1 C
+  Usage of /:   35.2% of 6.71GB   Processes:             110
+  Memory usage: 29%               Users logged in:       0
+  Swap usage:   0%                IPv4 address for ens5: 172.31.44.49
+
+ * Ubuntu Pro delivers the most comprehensive open source security and
+   compliance features.
+
+   https://ubuntu.com/aws/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+22 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+Last login: Mon Apr 20 15:29:40 2026 from 18.206.107.28
+ubuntu@ip-172-31-44-49:~$ sudo vim /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+ubuntu@ip-172-31-44-49:~$ sudo systemctl restart shh
+Failed to restart shh.service: Unit shh.service not found.
+ubuntu@ip-172-31-44-49:~$ sudo systemctl restart ssh
+ubuntu@ip-172-31-44-49:~$ logout
+Connection to 3.81.6.95 closed.
+prabhu@Prabhus-MacBook-Air ~ % ssh -i Downloads/aws-key-ansible.pem ubuntu@3.81.6.95
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.17.0-1007-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Apr 21 07:06:36 UTC 2026
+
+  System load:  0.0               Temperature:           -273.1 C
+  Usage of /:   35.2% of 6.71GB   Processes:             113
+  Memory usage: 30%               Users logged in:       0
+  Swap usage:   0%                IPv4 address for ens5: 172.31.44.49
+
+ * Ubuntu Pro delivers the most comprehensive open source security and
+   compliance features.
+
+   https://ubuntu.com/aws/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+22 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+Last login: Tue Apr 21 07:01:29 2026 from 167.103.120.181
+ubuntu@ip-172-31-44-49:~$ sudo passwd ubuntu
+New password:
+Retype new password:
+passwd: password updated successfully
+ubuntu@ip-172-31-44-49:~$ logout
+Connection to 3.81.6.95 closed.
+prabhu@Prabhus-MacBook-Air ~ % ssh-copy-id ubuntu@3.81.6.95
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/prabhu/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+ubuntu@3.81.6.95's password:
+
+Number of key(s) added:        1
+
+Now try logging into the machine, with: "ssh 'ubuntu@3.81.6.95'"
+and check to make sure that only the key(s) you wanted were added.
+
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+Ansible Inventory :
+ How ansible control node know who all manage node . this process called inventory .
+ Inventory is just a file
+ Just mentioned the name of the manage node
+ Inventory can written in inventory.ini file or yml file
+ ini means
+
+prabhu@Prabhus-MacBook-Air ~ % vim inventory.ini
+prabhu@Prabhus-MacBook-Air ~ % pwd
+/Users/prabhu
+prabhu@Prabhus-MacBook-Air ~ % cat inventory.ini
+ubuntu@54.80.123.253
+ubuntu@3.81.6.95
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+prabhu@Prabhus-MacBook-Air ~ % ansible -i inventory.ini -m ping all
+ubuntu@3.81.6.95 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+ubuntu@54.80.123.253 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+prabhu@Prabhus-MacBook-Air ~ % ansible -i inventory.ini -m shell -a "apt install openjdk" all
+ubuntu@3.81.6.95 | FAILED | rc=100 >>
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?non-zero return code
+ubuntu@54.80.123.253 | FAILED | rc=100 >>
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?non-zero return code
+prabhu@Prabhus-MacBook-Air ~ % ansible -i inventory.ini -m ping ubuntu@3.81.6.95
+ubuntu@3.81.6.95 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+Grouping of manage nodes :
+prabhu@Prabhus-MacBook-Air ~ % vim inventory.ini
+prabhu@Prabhus-MacBook-Air ~ % cat inventory.ini
+[app]
+ubuntu@54.80.123.253
+
+[db]
+ubuntu@3.81.6.95
+prabhu@Prabhus-MacBook-Air ~ % ansible -i inventory.ini -m ping db
+ubuntu@3.81.6.95 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+prabhu@Prabhus-MacBook-Air ~ % ansible -i inventory.ini -m ping app
+ubuntu@54.80.123.253 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+prabhu@Prabhus-MacBook-Air ~ %
+
+Adhoc Comments :
+ - In ansible we can provide input in Ansible plyabook and second is Adhoc comments
+ - Simple use Adhoc comments, example ping , restart , install
+ - For automation use Ansible playbook
+
+Synctax :https://docs.ansible.com/projects/ansible/latest/command_guide/intro_adhoc.html
+ansible
+location
+-m (shell/etc)
+arguments
+server
+
+prabhu@Prabhus-MacBook-Air ~ % ansible -i inventory.ini -m shell -a "sudo ls /etc/" db
+ubuntu@3.81.6.95 | CHANGED | rc=0 >>
+ModemManager
+PackageKit
+X11
+acpi
+adduser.conf
+alternatives
+apparmor
+apparmor.d
+apport
+apt
+bash.bashrc
+bash_completion
+bash_completion.d
+bindresvport.blacklist
+binfmt.d
+byobu
+ca-certificates
+ca-certificates.conf
+chrony
+cloud
+console-setup
+credstore
+credstore.encrypted
+cron.d
+cron.daily
+cron.hourly
+cron.monthly
+cron.weekly
+cron.yearly
+crontab
+cryptsetup-initramfs
+crypttab
+dbus-1
+debconf.conf
+debian_version
+default
+deluser.conf
+depmod.d
+dhcp
+dhcpcd.conf
+dpkg
+e2scrub.conf
+ec2_version
+environment
+ethertypes
+fstab
+fuse.conf
+fwupd
+gai.conf
+gnutls
+groff
+group
+group-
+grub.d
+gshadow
+gshadow-
+gss
+hdparm.conf
+hibagent-config.cfg
+hibinit-config.cfg
+host.conf
+hostname
+hosts
+hosts.allow
+hosts.deny
+init.d
+initramfs-tools
+inputrc
+iproute2
+iscsi
+issue
+issue.net
+kernel
+landscape
+ld.so.cache
+ld.so.conf
+ld.so.conf.d
+ldap
+legal
+libaudit.conf
+libblockdev
+libibverbs.d
+libnl-3
+locale.alias
+locale.conf
+locale.gen
+localtime
+logcheck
+login.defs
+logrotate.conf
+logrotate.d
+lsb-release
+lvm
+machine-id
+magic
+magic.mime
+manpath.config
+mdadm
+mime.types
+mke2fs.conf
+modprobe.d
+modules
+modules-load.d
+mtab
+multipath
+multipath.conf
+nanorc
+needrestart
+netconfig
+netplan
+network
+networkd-dispatcher
+networks
+newt
+nftables.conf
+nsswitch.conf
+opt
+os-release
+overlayroot.conf
+overlayroot.local.conf
+pam.conf
+pam.d
+passwd
+passwd-
+perl
+pki
+plymouth
+pm
+polkit-1
+pollinate
+ppp
+profile
+profile.d
+protocols
+python3
+python3.12
+rc0.d
+rc1.d
+rc2.d
+rc3.d
+rc4.d
+rc5.d
+rc6.d
+rcS.d
+resolv.conf
+rmt
+rpc
+rsyslog.conf
+rsyslog.d
+screenrc
+security
+selinux
+sensors.d
+sensors3.conf
+services
+sgml
+shadow
+shadow-
+shells
+skel
+sos
+ssh
+ssl
+subgid
+subgid-
+subuid
+subuid-
+sudo.conf
+sudo_logsrvd.conf
+sudoers
+sudoers.d
+supercat
+sysctl.conf
+sysctl.d
+sysstat
+systemd
+terminfo
+timezone
+tmpfiles.d
+ubuntu-advantage
+ucf.conf
+udev
+udisks2
+ufw
+update-manager
+update-motd.d
+update-notifier
+usb_modeswitch.conf
+usb_modeswitch.d
+vconsole.conf
+vim
+vmware-tools
+vtrgb
+wgetrc
+xattr.conf
+xdg
+xml
+zsh_command_not_found
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+----------
+
+
+
