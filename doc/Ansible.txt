@@ -603,5 +603,104 @@ prabhu@Prabhus-MacBook-Air ~ %
 
 ----------
 
+Day -3 : Ansible playbook
+
+yaml :
+  - human readable data serializable language
+  - start with ---
+  - list 2 space
+  -
+
+Playbooks
+  - list of plays
+    -play1
+     - host
+     - user
+     - task
+         - task1
+             - module
+         - task2
+             - module
+
+
+---
+- name: Configure Web Servers
+  hosts: webservers        # Target group defined in your inventory
+  become: yes              # Use sudo privileges to execute tasks
+
+  tasks:
+    - name: Ensure Apache is installed
+      apt:                 # Ansible module for Debian/Ubuntu package management
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is started and enabled
+      service:             # Ansible module for managing services
+        name: apache2
+        state: started
+        enabled: yes
+
+
+https://github.com/Prabhu-coder-007/ansible-zero-to-hero/blob/main/Day-03/02-ansible-playbook-components.md
+
+https://github.com/Prabhu-coder-007/ansible-zero-to-hero/blob/main/Day-03/03-first-playbook/first-playbook.yaml
+
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Install apache httpd
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html
+        owner: root
+        group: root
+        mode: '0644'
+
+https://docs.ansible.com/
+
+https://docs.ansible.com/projects/ansible/latest/module_plugin_guide/modules_intro.html
+
+https://docs.ansible.com/projects/ansible/latest/collections/index.html
+
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/index.html#plugins-in-ansible-builtin
+
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/apt_module.html#ansible-collections-ansible-builtin-apt-module
+
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/copy_module.html#ansible-collections-ansible-builtin-copy-module
+
+prabhu@Prabhus-MacBook-Air ~ % vim index.html
+prabhu@Prabhus-MacBook-Air ~ % vim first-paybook.yaml
+prabhu@Prabhus-MacBook-Air ~ % ansible-playbook -i inventory.ini first-paybook.yaml
+
+PLAY [all] ******************************************************************************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************************************
+ok: [ubuntu@54.80.123.253]
+ok: [ubuntu@3.81.6.95]
+
+TASK [Install apache httpd] *************************************************************************************************************************************
+changed: [ubuntu@54.80.123.253]
+changed: [ubuntu@3.81.6.95]
+
+TASK [Copy file with owner and permissions] *********************************************************************************************************************
+changed: [ubuntu@54.80.123.253]
+changed: [ubuntu@3.81.6.95]
+
+PLAY RECAP ******************************************************************************************************************************************************
+ubuntu@3.81.6.95           : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ubuntu@54.80.123.253       : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+54.80.123.253
+
+
 
 
