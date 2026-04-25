@@ -701,6 +701,10 @@ prabhu@Prabhus-MacBook-Air ~ %
 
 54.80.123.253
 
+-----------
+
+Day - 4 : Ansible Roles
+
 
 
 

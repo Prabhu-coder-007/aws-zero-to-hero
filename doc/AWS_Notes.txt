@@ -2778,4 +2778,122 @@ http://localhost:3001/?orgId=1&from=now-6h&to=now&timezone=browser
 
 
 
+Day -20 Continue
+
+ECR - Elastic Container Register
+
+- Similar to dockerHub
+- AWS ECR Will be available all the time
+
+Diff b/w ECR vs DockerHub
+- DockerHub is opensource
+- DokerHub has both public and private repository
+- ECR by default it supports Private repositoru in nature , you can also use as public repository
+- ECS we can integrate with IAM and other AWS services
+- fyi : gcr means google cloud container
+
+Push commands for demo/app-repo
+
+
+Make sure that you have the latest version of the AWS CLI and Docker installed. For more information, see Getting Started with Amazon ECR .
+Use the following steps to authenticate and push an image to your repository. For additional registry authentication methods, including the Amazon ECR credential helper, see Registry Authentication .
+Retrieve an authentication token and authenticate your Docker client to your registry. Use the AWS CLI:
+aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 082008999972.dkr.ecr.eu-north-1.amazonaws.com
+Note: If you receive an error using the AWS CLI, make sure that you have the latest version of the AWS CLI and Docker installed.
+Build your Docker image using the following command. For information on building a Docker file from scratch see the instructions here . You can skip this step if your image is already built:
+docker build -t demo/app-repo .
+After the build completes, tag your image so you can push the image to this repository:
+docker tag demo/app-repo:latest 082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo/app-repo:latest
+Run the following command to push this image to your newly created AWS repository:
+docker push 082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo/app-repo:latest
+Close
+
+AKIARGGA6BASGREB657VvrFQRzUdq3p1U0jsHF/riSaV34hAOlbGWXFIpugc
+
+aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 082008999972.dkr.ecr.eu-north-1.amazonaws.com
+
+prabhu@Prabhus-MacBook-Air ~ % aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 082008999972.dkr.ecr.eu-north-1.amazonaws.com
+Login Succeeded
+prabhu@Prabhus-MacBook-Air ~ % vim Dockerfile
+prabhu@Prabhus-MacBook-Air ~ % docker build -t demo/app-repo .
+[+] Building 6.4s (6/6) FINISHED                                                                                                            docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                                                        0.0s
+ => => transferring dockerfile: 57B                                                                                                                         0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:latest                                                                                            2.9s
+ => [auth] library/ubuntu:pull token for registry-1.docker.io                                                                                               0.0s
+ => [internal] load .dockerignore                                                                                                                           0.0s
+ => => transferring context: 2B                                                                                                                             0.0s
+ => [1/1] FROM docker.io/library/ubuntu:latest@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b                                      2.9s
+ => => resolve docker.io/library/ubuntu:latest@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b                                      0.0s
+ => => sha256:818154cda96df8bbb276b4f4339124da55756620a1037af15570bc95312850fa 28.88MB / 28.88MB                                                            2.8s
+ => exporting to image                                                                                                                                      3.3s
+ => => exporting layers                                                                                                                                     0.0s
+ => => exporting manifest sha256:fcfba26386643c05a29debe71fefbb4341f1d441c1d2fb6e0327b3c0e08994ae                                                           0.0s
+ => => exporting config sha256:872f6ebc70ec53bedc7e3b6e5f641ead8889dbf1a393203b8056c1e308c906ac                                                             0.0s
+ => => exporting attestation manifest sha256:b3eee5ea698a97d34fca62cedef90adcb8e6cae82734d8a5c52579c639f4e2b4                                               0.0s
+ => => exporting manifest list sha256:06b07ab81b7a9980b9f63e6bec01bf469501185fdade4ed2d95aaee619804dac                                                      0.0s
+ => => naming to docker.io/demo/app-repo:latest                                                                                                             0.0s
+ => => unpacking to docker.io/demo/app-repo:latest                                                                                                          3.3s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/khzbnu1l8vdi0hjiur2cwom4j
+prabhu@Prabhus-MacBook-Air ~ % docker images
+                                                                                                                                             i Info →   U  In Use
+IMAGE                                                                                                 ID             DISK USAGE   CONTENT SIZE   EXTRA
+demo/app-repo:latest                                                                                  06b07ab81b7a        139MB         28.9MB
+gcr.io/k8s-minikube/kicbase:v0.0.50                                                                   ffefe6978189       1.88GB          507MB
+gcr.io/k8s-minikube/kicbase@sha256:eb4fec00e8ad70adf8e6436f195cc429825ffb85f95afcdb5d8d9deb576f3e93   eb4fec00e8ad       1.88GB          507MB    U
+prabhu@Prabhus-MacBook-Air ~ % docker tag demo/app-repo:latest 082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo/app-repo:latest
+prabhu@Prabhus-MacBook-Air ~ % docker push 082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo/app-repo:latest
+The push refers to repository [082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo/app-repo]
+1085516d087f: Pushed
+818154cda96d: Pushed
+latest: digest: sha256:06b07ab81b7a9980b9f63e6bec01bf469501185fdade4ed2d95aaee619804dac size: 855
+prabhu@Prabhus-MacBook-Air ~ %
+
+
+Day - 21
+ECS - Elastic Container Service
+
+Docker - Container Platform
+       - Container Image
+       - Pull Image
+       - Push Image
+
+Why ECS/Kubernets ?
+       - Docker wont support auto healing and auto scalling . But kubernets support auto healing and scalling
+       - To solve this problem  container orgastrucre envoirment ( COE) concepts came in kubernets
+       - wont use pod , deployement etc  which is there in kubernets its use tasks , services and cluster
+       - You cant move ECS to Azure . If you are using kubernets in ECS and if you want to mvoe to Azure u can simple move
+       - Multi-cloud means AWS , Azure , GCP , OCI etc
+       - Kubernets keep adding features , since its open source .
+       - ECS doesnot have another feature which kubernets have
+       - CRD'S- Custome Resource Definition in Kubernets
+       - ECS = Fargate(Server-less) , EC2 you can use it
+       - Kubernets is very high architecture but ECS is simple .
+       - EKS is very popular now a days (2026)
+
+Structure of ECS:
+ - Create a cluster ECS
+ - 1. Fargate :
+ - 2. EC2 Instance :
+ - In the task Definiation how your continer looks like . taskDefinition.yml similiar to pod.yml in kubernets
+ - Then create a service and add load balacing
+ - Use inbuild IAM roles and polices
+
+Demo :
+ - ECS --> Create Cluster
+ - ECS Default cloud watch monitoring
+ - ECS always use ECR
+
+ 082008999972.dkr.ecr.eu-north-1.amazonaws.com/demo/app1
+
+----------------------------
+
+Day -23:
+
+EKS : Elastic Kuberbetes Service
+
+
+
+
 
